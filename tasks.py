@@ -27,3 +27,11 @@ def run_tests(ctx, test_module='pannier', opts='', pty=False):
             pty=pty
         )
         ctx.run('coverage xml')
+
+
+@task
+def create_superuser(ctx):
+    ctx.run(
+        'docker exec -it pannier_pannier_1 /bin/bash -c "python3 manage.py createsuperuser"',
+        pty=True
+    )

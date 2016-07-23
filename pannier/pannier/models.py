@@ -31,6 +31,7 @@ class Lead(BaseModel):
     email_address = models.CharField(max_length=256)
     phone_number = models.CharField(max_length=16, blank=True)
     team_size = models.CharField(max_length=24, choices=TEAM_SIZE)
+    contacted = models.BooleanField(default=False)
 
     def __str__(self):
         return 'Lead: {}'.format(self.full_name)
