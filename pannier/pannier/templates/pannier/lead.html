@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<div>
+    <h2>DemoTime Trial Invite Signup</h2>
+    <p>Hello there! Thank you so much for your interest in DemoTime. We're super excited
+     to hear from you. If you're interested in being invited to our trial, please 
+     just fill out for the form below and we'll be in contact via email within 24 hours. </p>
+
+    <p>We ask anyone interested to please understand that this is a Beta grade product 
+    currently. We're currently in a phase of gathering as much user feedback as we 
+    possibly can to help guide DemoTime to success. As this is a beta, we can not 
+    currently make any guarantees on uptime and data integrity at this time. Please 
+    know however that we take those topics <i>very</i> seriously, and will do everything 
+    within our power to ensure you have a constant, happy experience.</p>
+
+    <p>If you're hesitant to sign up now, or have questions, please feel free to 
+    contact us via email. We're reachable at <a href="mailto:support@domestiquestudios.com">Support@DomestiqueStudios.com</a>
+    </p>
+<div>
+    <form action="{% url 'lead-create' %}" method='post'>
+        {{ form.as_p }}
+        <input type="submit" value="Submit" />
+    </form>
+</div>
+{% endblock %}

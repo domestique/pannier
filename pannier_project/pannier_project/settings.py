@@ -47,6 +47,13 @@ INSTALLED_APPS = [
     'pannier',
 ]
 
+try:
+    import django_nose
+except ImportError:
+    pass
+else:
+    INSTALLED_APPS += ('django_nose', )
+
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -130,12 +137,20 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
+# MEDIA SETTINGS
 STATIC_URL = '/static/'
 STATIC_ROOT = parser.get('pannier', 'static_root')
 
+# TEST SETTINGS
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+NOSE_ARGS = [
+    '--logging-filter=-django.db.backends.schema',
+    '--with-id',
+]
+
+# EMAIL SETTINGS
 DEFAULT_FROM_EMAIL = parser.get('pannier', 'default_from_email')
 EMAIL_BACKEND = parser.get('pannier', 'email_backend')
-
 if parser.has_section('email'):
     EMAIL_HOST = parser.get('email', 'email_host')
     EMAIL_HOST_USER = parser.get('email', 'email_host_user')

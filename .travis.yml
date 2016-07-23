@@ -18,9 +18,6 @@ before_install:
 script:
     - docker-compose -p pannier -f docker-compose.yml -f docker-compose.build.yml build
     - docker-compose -p pannier -f docker-compose.yml -f docker-compose.build.yml up -d
-    - docker ps -a
-    - docker inspect pannier_pannier_1
-    - docker inspect pannier_pannier_db_1
     - docker exec -it pannier_pannier_1 /bin/bash -c "../wait_for_it.sh pannier_db:5432"
     - docker exec -it pannier_pannier_1 /bin/bash -c "cd ../ && invoke run_tests"
     - bash <(curl -s https://codecov.io/bash)
@@ -37,3 +34,4 @@ notifications:
   email:
     recipients:
       - f4nt@f4ntasmic.com
+      - dannypeck@gmail.com
