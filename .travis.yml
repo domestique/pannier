@@ -15,8 +15,6 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
   - docker volume create --name pannier_pg_data
 script:
-    - npm test
-    - rm -rf node_modules
     - docker-compose -p pannier -f docker-compose.yml -f docker-compose.build.yml build
     - docker-compose -p pannier docker-compose.yml -f docker-compose.build.yml up -d
     - docker exec -it pannier_pannier_1 /bin/bash -c "cd ../ && invoke run_tests"
