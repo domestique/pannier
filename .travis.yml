@@ -4,6 +4,7 @@ services:
 addons:
     hosts:
         - pannier_db
+        - pannier_pannier_db
 env:
     - DOCKER_COMPOSE_VERSION=1.7.0
 before_install:
