@@ -16,7 +16,7 @@ before_install:
   - docker volume create --name pannier_pg_data
 script:
     - docker-compose -p pannier -f docker-compose.yml -f docker-compose.build.yml build
-    - docker-compose -p pannier docker-compose.yml -f docker-compose.build.yml up -d
+    - docker-compose -p pannier -f docker-compose.yml -f docker-compose.build.yml up -d
     - docker exec -it pannier_pannier_1 /bin/bash -c "cd ../ && invoke run_tests"
     - bash <(curl -s https://codecov.io/bash)
     - docker-compose -p pannier -f docker-compose.yml -f docker-compose.build.yml down
