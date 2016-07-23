@@ -1,0 +1,12 @@
+version: '2'
+services: 
+    pannier_db:
+        image: postgres:9.5.3
+        environment:
+            - POSTGRES_DB=pannier
+    pannier:
+        build: .
+        image: domestique/pannier
+        volumes:
+            - .:/home/docker/pannier
+            - /etc/pannier:/etc/pannier

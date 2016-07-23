@@ -1,0 +1,37 @@
+sudo: required
+services:
+    - docker
+addons:
+    hosts:
+        - pannier_db
+env:
+    - DOCKER_COMPOSE_VERSION=1.7.0
+before_install:
+  - sudo apt-get update
+  - sudo apt-get install -o Dpkg::Options::="--force-confold" --force-yes -y docker-engine
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
+  - docker volume create --name pannier_pg_data
+script:
+    - npm test
+    - rm -rf node_modules
+    - docker-compose -p pannier -f docker-compose.yml -f docker-compose.build.yml build
+    - docker-compose -p pannier docker-compose.yml -f docker-compose.build.yml up -d
+    - docker exec -it pannier_pannier_1 /bin/bash -c "cd ../ && invoke run_tests"
+    - bash <(curl -s https://codecov.io/bash)
+    - docker-compose -p pannier -f docker-compose.yml -f docker-compose.build.yml down
+after_success:
+    - docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
+    - if [ "$TRAVIS_BRANCH" == "master" ]; then
+        docker push domestique/pannier;
+      else
+        docker tag domestique/pannier:latest domestique/pannier:${TRAVIS_BRANCH};
+        docker push domestique/pannier:${TRAVIS_BRANCH};
+      fi
+notifications:
+  email:
+    recipients:
+      - f4nt@f4ntasmic.com
+      - dannypeck@gmail.com

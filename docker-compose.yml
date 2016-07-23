@@ -1,0 +1,23 @@
+version: '2'
+volumes:
+    pannier_pg_data:
+        external: true
+services: 
+    pannier_db:
+        image: postgres:9.5.3
+        environment:
+            - POSTGRES_PASSWORD=pannier_docker
+            - POSTGRES_DB=pannier
+        volumes:
+            - pannier_pg_data:/var/lib/postgresql/data
+            - ~/pannier_backups:/backups
+    pannier:
+        command: ./startup.sh
+        depends_on:
+            - pannier_db
+        ports:
+            - "8034:8034"
+        links:
+            - pannier_db
+        environment:
+            - STATIC_PATH=/usr/local/pannier/static/

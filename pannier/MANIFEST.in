@@ -1,0 +1,2 @@
+recursive-include pannier/templates *
+recursive-include pannier/static *

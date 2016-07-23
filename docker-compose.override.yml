@@ -1,0 +1,16 @@
+version: '2'
+services: 
+    pannier_db:
+        image: postgres:9.5.3
+        environment:
+            - POSTGRES_DB=pannier
+    pannier:
+        build: .
+        image: domestique/pannier
+        command: ./startup.sh
+        volumes:
+            - .:/home/docker/pannier
+            - /private/etc/pannier:/etc/pannier
+            - ~/pannier_backups:/backups
+        environment:
+            - STATIC_PATH=/home/docker/pannier/pannier/pannier/static

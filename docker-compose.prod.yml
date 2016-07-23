@@ -1,0 +1,12 @@
+version: '2'
+services: 
+    pannier_db:
+        image: postgres:9.5.3
+        environment:
+            - POSTGRES_DB=pannier
+    pannier:
+        image: domestique/pannier:latest
+        command: ./startup.sh
+        volumes:
+            - /etc/pannier:/etc/pannier
+            - ~/pannier_backups:/backups
