@@ -1,5 +1,5 @@
 #! /bin/bash
-../wait_for_it.sh db:5432
+../wait_for_it.sh pannier_db:5432
 sed -i "s@STATIC_PATH@$STATIC_PATH@g" /etc/nginx/sites-enabled/pannier.conf
 python3 manage.py migrate --noinput
 python3 manage.py collectstatic --noinput
