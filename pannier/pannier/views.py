@@ -1,5 +1,7 @@
-from django.views.generic import TemplateView
+from django.conf import settings
 from django.shortcuts import redirect
+from django.core.mail import send_mail
+from django.views.generic import TemplateView
 
 from pannier import forms, models
 
@@ -25,6 +27,13 @@ class LeadCreationView(TemplateView):
         if self.form.is_valid():
             data = self.form.cleaned_data
             models.Lead.create_lead(**data)
+            send_mail(
+                subject='New Invite Signup!',
+                message='Someone new has filled out the Invite form!',
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=['support@domestiquestudios.com'],
+                fail_silently=True
+            )
             return redirect('thanks')
 
         return self.get(request, *args, **kwargs)

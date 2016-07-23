@@ -1,3 +1,4 @@
+from django.core import mail
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 
@@ -63,6 +64,8 @@ class TestPannierViews(BaseCase):
         self.assertEqual(lead.email_address, 'pat@pattycakes.com')
         self.assertEqual(lead.phone_number, '321-321-4321')
         self.assertEqual(lead.team_size, '10-30')
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertEqual(mail.outbox[0].subject, 'New Invite Signup!')
 
     def test_lead_create_error(self):
         response = self.client.post(reverse('lead-create'), {
