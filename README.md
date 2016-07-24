@@ -31,9 +31,9 @@ Initial Steps:
 
 Local Python Setup - Running tests, debugging, etc:
 
-* Create the db `python dt/manage.py migrate`
-* Set up an administrator `python dt/manage.py createsuperuser`
-* Startup the server `python dt/manage.py runserver`
+* Create the db `python pannier_project/manage.py migrate`
+* Set up an administrator `python pannier_project/manage.py createsuperuser`
+* Startup the server `python pannier_project/manage.py runserver`
 * Optionally: `python manage.py runserver 8008` to run on a different port
 * Login via the admin at http://localhost:8000/
 
