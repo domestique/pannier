@@ -1,26 +1,71 @@
 {% extends 'base.html' %}
+
+{% block styles %}
+{{ block.super }}
+<style>
+h2 {
+    margin-bottom: 20px;
+}
+section p:last-child {
+    margin-bottom: 0;
+}
+.helptext {
+    font-style: italic;
+    font-size: 12px;
+    color: #aaa;
+    position: relative;
+    top: -15px;
+}
+small.disc {
+    margin: 25px 0;
+    display: block;
+    padding: 5px 15px;
+    background: #f6f6f6;
+}
+form {
+    margin-top: 40px;
+}
+@media screen and (max-width:420px) {
+    select,
+    input[type="submit"] {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
+</style>
+{% endblock %}
+
 {% block content %}
-<div>
+<div class="inner-container">
     <h2>DemoTime Trial Invite Signup</h2>
-    <p>Hello there! Thank you so much for your interest in DemoTime. We're super excited
-     to hear from you. If you're interested in being invited to our trial, please 
-     just fill out for the form below and we'll be in contact via email within 24 hours. </p>
+    <section>
+        <p>Hello there! Thank you so much for your interest in DemoTime. We're super excited
+        to hear from you. If you're interested in being invited to our trial, please
+        just fill out for the form below and we'll be in contact via email within 24 hours. </p>
 
-    <p>We ask anyone interested to please understand that this is a Beta grade product 
-    currently. We're currently in a phase of gathering as much user feedback as we 
-    possibly can to help guide DemoTime to success. As this is a beta, we can not 
-    currently make any guarantees on uptime and data integrity at this time. Please 
-    know however that we take those topics <i>very</i> seriously, and will do everything 
-    within our power to ensure you have a constant, happy experience.</p>
+        <p>If you're hesitant to sign up now, or have questions, please feel free to
+        contact us via email. We're reachable at <a href="mailto:support@domestiquestudios.com">Support@DomestiqueStudios.com</a>
+        </p>
+    </section>
 
-    <p>If you're hesitant to sign up now, or have questions, please feel free to 
-    contact us via email. We're reachable at <a href="mailto:support@domestiquestudios.com">Support@DomestiqueStudios.com</a>
-    </p>
-<div>
     <form action="{% url 'lead-create' %}" method='post'>
         {% csrf_token %}
         {{ form.as_p }}
+        <small class="disc">
+        <p>We ask anyone interested to please understand that this is a Beta grade product
+        currently. We're currently in a phase of gathering as much user feedback as we
+        possibly can to help guide DemoTime to success. As this is a beta, we can not
+        currently make any guarantees on uptime and data integrity at this time. Please
+        know however that we take those topics <i>very</i> seriously, and will do everything
+        within our power to ensure you have a constant, happy experience.
+        Also feel free to review our <a href="//demoti.me/terms-of-use/" target="_blank">terms of use</a>
+        and <a href="//demoti.me/privacy-policy/" target="_blank">privacy policy</a>.</p>
+        </small>
         <input type="submit" value="Submit" />
     </form>
 </div>
+<script>
+$('input[type="text"]').first().focus();
+</script>
 {% endblock %}
