@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% block title %}Sign up now for a free trial!{% endblock %}
+
 {% block styles %}
 {{ block.super }}
 <style>
@@ -33,20 +35,31 @@ form {
         box-sizing: border-box;
     }
 }
+@media screen and (max-width:590px) {
+    iframe {
+        max-width: 100%;
+        height: auto;
+    }
+}
+
 </style>
 {% endblock %}
 
 {% block content %}
 <div class="inner-container">
-    <h2>DemoTime Trial Invite Signup</h2>
+    <h2>DemoTime Beta</h2>
     <section>
-        <p>Hello there! Thank you so much for your interest in DemoTime. We're super excited
-        to hear from you. If you're interested in being invited to our trial, please
-        just fill out for the form below and we'll be in contact via email within 24 hours. </p>
+        <p><strong>Hello there</strong>!
+        Thank you so much for your interest in DemoTime,
+        A brand new digital collaboration tool from <a href="http://domestiquestudios.com">Domestique Studios</a>.
+        We're super excited to hear from you. If you have any questions about
+        the platform, contact us <a href="mailto:support@domestiquestudios.com">via email</a>.</p>
 
-        <p>If you're hesitant to sign up now, or have questions, please feel free to
-        contact us via email. We're reachable at <a href="mailto:support@domestiquestudios.com">Support@DomestiqueStudios.com</a>
-        </p>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/jArR1BpLMvk" frameborder="0" allowfullscreen></iframe>
+
+        <p>Are you a creative, manage a team or often find yourself needing to present or get feedback on your work?
+        DemoTime is available to anyone! <strong>Just fill out the form below and we'll contact you ASAP.</strong></p>
+
     </section>
 
     <form action="{% url 'lead-create' %}" method='post'>
@@ -65,7 +78,4 @@ form {
         <input type="submit" value="Submit" />
     </form>
 </div>
-<script>
-$('input[type="text"]').first().focus();
-</script>
 {% endblock %}
