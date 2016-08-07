@@ -5,6 +5,8 @@ from django.shortcuts import redirect
 from django.core.mail import send_mail
 from django.http import HttpResponse
 from django.views.generic import TemplateView, View
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 
 from pannier import forms, models
 
@@ -48,6 +50,10 @@ class ThankYouView(TemplateView):
 
 
 class DockerHubView(View):
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, *args, **kwargs):
+        return super(DockerHubView, self).dispatch(*args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         data = json.loads(request.body)
