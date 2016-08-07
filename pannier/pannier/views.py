@@ -1,7 +1,10 @@
+import json
+
 from django.conf import settings
 from django.shortcuts import redirect
 from django.core.mail import send_mail
-from django.views.generic import TemplateView
+from django.http import HttpResponse
+from django.views.generic import TemplateView, View
 
 from pannier import forms, models
 
@@ -44,5 +47,13 @@ class ThankYouView(TemplateView):
     template_name = 'pannier/thanks.html'
 
 
+class DockerHubView(View):
+
+    def post(self, request, *args, **kwargs):
+        data = json.loads(request.body)
+        print(data)
+        return HttpResponse(status_code=200)
+
 lead_creation_view = LeadCreationView.as_view()
 thanks_view = ThankYouView.as_view()
+docker_hub_view = DockerHubView.as_view()
