@@ -56,7 +56,7 @@ class DockerHubView(View):
         return super(DockerHubView, self).dispatch(*args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        data = json.loads(request.body)
+        data = json.loads(request.body.decode('utf8'))
         print(data)
         return HttpResponse(status_code=200)
 
