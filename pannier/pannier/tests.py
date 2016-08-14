@@ -1,8 +1,15 @@
+import os
+
+from mock import patch
+
 from django.core import mail
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django.core.urlresolvers import reverse
 
 from pannier import forms, models
+
+CUR_DIR = os.path.dirname(os.path.realpath(__file__))
+TEST_DIR = os.path.join(CUR_DIR, 'test_data')
 
 
 class BaseCase(TestCase):
@@ -91,3 +98,13 @@ class TestPannierViews(BaseCase):
         self.assertStatusCode(response, 200)
         self.assertTemplateUsed('base.html')
         self.assertTemplateUsed('thanks.html')
+
+    @override_settings(PANNIER_WORKSPACE='/home/workspace/')
+    @patch('pannier.views.call')
+    def test_docker_webhook(self, call_mock):
+        json_data = open(os.path.join(TEST_DIR, 'docker_hook.json')).read()
+        response = self.client.post(reverse('docker'), content_type='application/json', data=json_data)
+        self.assertStatusCode(response, 200)
+        call_mock.assert_called_with(
+            ['cd', '/home/workspace/', '&&', './tag_new_version.sh']
+        )

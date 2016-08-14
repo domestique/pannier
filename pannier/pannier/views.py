@@ -1,5 +1,7 @@
 import json
 
+from subprocess import call
+
 from django.conf import settings
 from django.shortcuts import redirect
 from django.core.mail import send_mail
@@ -56,9 +58,22 @@ class DockerHubView(View):
         return super(DockerHubView, self).dispatch(*args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        data = json.loads(request.body.decode('utf8'))
-        print(data)
-        return HttpResponse(status_code=200)
+        if settings.PANNIER_WORKSPACE or settings.DT_WORKSPACE:
+            data = json.loads(request.body.decode('utf-8'))
+            if data['push_data']['tag'] == 'latest':
+                if data['repository']['name'] == 'pannier':
+                    command = [
+                        'cd', settings.PANNIER_WORKSPACE, '&&',
+                        './tag_new_version.sh'
+                    ]
+                else:
+                    command = [
+                        'cd', settings.DT_WORKSPACE, '&&',
+                        './tag_new_version.sh'
+                    ]
+
+                call(command)
+        return HttpResponse(status=200)
 
 lead_creation_view = LeadCreationView.as_view()
 thanks_view = ThankYouView.as_view()
