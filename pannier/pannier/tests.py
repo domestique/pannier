@@ -106,5 +106,5 @@ class TestPannierViews(BaseCase):
         response = self.client.post(reverse('docker'), content_type='application/json', data=json_data)
         self.assertStatusCode(response, 200)
         call_mock.assert_called_with(
-            'cd /home/workspace/ && ./tag_new_version.sh', shell=True
+            './tag_new_version.sh', shell=True, cwd='/home/workspace/'
         )

@@ -61,12 +61,13 @@ class DockerHubView(View):
         if settings.PANNIER_WORKSPACE or settings.DT_WORKSPACE:
             data = json.loads(request.body.decode('utf-8'))
             if data['push_data']['tag'] == 'latest':
+                command = './tag_new_version.sh'
                 if data['repository']['name'] == 'pannier':
-                    command = 'cd {} && ./tag_new_version.sh'.format(settings.PANNIER_WORKSPACE)
+                    work_dir = settings.PANNIER_WORKSPACE
                 else:
-                    command = 'cd {} && ./tag_new_version.sh'.format(settings.DT_WORKSPACE)
+                    work_dir = settings.DT_WORKSPACE
 
-                call(command, shell=True)
+                call(command, shell=True, cwd=work_dir)
         return HttpResponse(status=200)
 
 lead_creation_view = LeadCreationView.as_view()
