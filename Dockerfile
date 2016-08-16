@@ -5,7 +5,8 @@ ENV LANG=C.UTF-8
 RUN dpkg-divert --local --rename --add /sbin/initctl && \
     apt-get update && \
     apt-get -y install build-essential python3 python3-dev python3-setuptools git \
-        ca-certificates libpq-dev nginx cron libffi-dev vim libncurses5-dev libncurses5 && \
+        ca-certificates libpq-dev nginx cron libffi-dev vim libncurses5-dev libncurses5 \
+        docker.io && \
     /usr/bin/easy_install3 -UaZ pip && \
     mkdir -p /home/docker/pannier/ /var/log/uwsgi /usr/local/pannier/static /usr/local/pannier/media
 

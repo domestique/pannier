@@ -10,3 +10,4 @@ services:
         volumes:
             - /etc/pannier:/etc/pannier
             - ~/pannier_backups:/backups
+            - ~/.ssh:/root/.ssh
