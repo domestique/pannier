@@ -108,3 +108,4 @@ class TestPannierViews(BaseCase):
         call_mock.assert_called_with(
             './tag_new_version.sh', shell=True, cwd='/home/workspace/'
         )
+        self.assertEqual(len(mail.outbox), 1)

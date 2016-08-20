@@ -62,12 +62,21 @@ class DockerHubView(View):
             data = json.loads(request.body.decode('utf-8'))
             if data['push_data']['tag'] == 'latest':
                 command = './tag_new_version.sh'
-                if data['repository']['name'] == 'pannier':
+                repo_name = data['repository']['name']
+
+                if repo_name == 'pannier':
                     work_dir = settings.PANNIER_WORKSPACE
                 else:
                     work_dir = settings.DT_WORKSPACE
 
                 call(command, shell=True, cwd=work_dir)
+                send_mail(
+                    subject='New {} Version Pushed'.format(repo_name),
+                    message='A new version of {} has been tagged'.format(repo_name),
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    recipient_list=['support@domestiquestudios.com'],
+                    fail_silently=True
+                )
         return HttpResponse(status=200)
 
 lead_creation_view = LeadCreationView.as_view()
