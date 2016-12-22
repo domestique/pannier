@@ -10,5 +10,7 @@ else
     # Just in case this snuck in via a build somewhere
     rm -f /home/docker/pannier/pannier/pannier/static/admin;
 fi
+chmod 0600 /root/.ssh/*
+chown root:root /root/.ssh/*
 uwsgi --ini /home/docker/pannier/configs/uwsgi/pannier_uwsgi.ini --daemonize /var/log/uwsgi/pannier.log 
 nginx -g "daemon off;"

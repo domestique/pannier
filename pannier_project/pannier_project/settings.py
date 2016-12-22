@@ -22,6 +22,8 @@ if not parser.has_section('pannier'):
     parser.set('pannier', 'default_from_email', 'demotimesystem@gmail.com')
     parser.set('pannier', 'email_backend', 'django.core.mail.backends.console.EmailBackend')
     parser.set('pannier', 'static_root', '/usr/local/pannier/static')
+    parser.set('pannier', 'demotime_workspace', '')
+    parser.set('pannier', 'pannier_workspace', '')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
@@ -147,6 +149,10 @@ NOSE_ARGS = [
     '--logging-filter=-django.db.backends.schema',
     '--with-id',
 ]
+
+# PANNIER SETTINGS
+DT_WORKSPACE = parser.get('pannier', 'demotime_workspace')
+PANNIER_WORKSPACE = parser.get('pannier', 'pannier_workspace')
 
 # EMAIL SETTINGS
 DEFAULT_FROM_EMAIL = parser.get('pannier', 'default_from_email')
